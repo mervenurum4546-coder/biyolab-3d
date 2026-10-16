@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>BiyoLab 3D | Duyu ve Sinir Sistemi</title>
+<style>
+:root{--navy:#10172d;--panel:#171f3b;--panel2:#202b4d;--line:#344267;--text:#eef3ff;--muted:#b6c3e2;--cyan:#62e5f5;--violet:#b9a0ff;--pink:#ff9fc8;--gold:#ffd477;--green:#9df2c2}
+*{box-sizing:border-box}body{margin:0;background:radial-gradient(ellipse at top,#25345e 0,#111831 45%,#090f20 100%);color:var(--text);font-family:Inter,system-ui,Arial,sans-serif;min-height:100vh}
+header{padding:24px clamp(16px,4vw,48px) 18px;border-bottom:1px solid #ffffff18;background:#0c1326b8}
+.top{max-width:1250px;margin:auto;display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap}
+.brand{display:flex;align-items:center;gap:12px}.logo{width:46px;height:46px;border-radius:15px;background:linear-gradient(140deg,#5de5f5,#9a8bff);display:grid;place-items:center;color:#111831;font-size:24px;box-shadow:0 0 30px #62e5f533}
+h1{font-size:clamp(22px,3.4vw,35px);margin:0;letter-spacing:-.8px}.sub{margin:5px 0 0;color:var(--muted);font-size:14px}.tag{border:1px solid #62e5f555;border-radius:99px;padding:8px 12px;color:var(--cyan);font-size:12px;font-weight:800;letter-spacing:.7px}
+main{max-width:1250px;margin:22px auto;padding:0 16px 40px}
+.tabs{display:flex;gap:8px;overflow:auto;padding-bottom:14px}.tab{white-space:nowrap;border:1px solid var(--line);background:#18213e;color:var(--muted);padding:11px 15px;border-radius:12px;font-weight:750;cursor:pointer}.tab.active{background:linear-gradient(120deg,#2e7d9c,#6254b8);border-color:#8cecf7;color:white}
+.layout{display:grid;grid-template-columns:minmax(0,1.45fr) minmax(290px,.8fr);gap:16px}.panel{background:linear-gradient(150deg,#1a2443f5,#121a31f5);border:1px solid #ffffff17;border-radius:20px;overflow:hidden;box-shadow:0 18px 50px #0002}.panelhead{padding:18px 20px 12px;display:flex;justify-content:space-between;gap:12px;align-items:start}.panelhead h2{font-size:18px;margin:0}.panelhead p{color:var(--muted);font-size:13px;margin:5px 0 0;line-height:1.5}.view{position:relative;min-height:360px;background:radial-gradient(ellipse at 50% 46%,#29395e,#111a32 70%);overflow:hidden}.view canvas{display:block;width:100%;height:100%;min-height:360px;outline:none}.viewlabel{position:absolute;left:14px;bottom:12px;background:#0b1226c9;border:1px solid #ffffff22;border-radius:9px;padding:8px 10px;font-size:11px;color:#d6e5ff;pointer-events:none}.viewtools{position:absolute;right:12px;top:12px;display:flex;gap:7px}.mini{background:#111a31d9;color:white;border:1px solid #ffffff2a;border-radius:9px;padding:8px 10px;cursor:pointer;font-size:12px}.controls{padding:17px 19px 20px;border-top:1px solid #ffffff12}.controls label{display:block;font-size:13px;color:var(--muted);font-weight:700;margin:12px 0 7px}.controls select,.controls input{width:100%;background:#0e1730;border:1px solid #39496e;color:white;padding:11px;border-radius:10px;font:inherit}.btn{background:linear-gradient(110deg,#4ec9dc,#9b8bff);border:0;color:#10172d;font-weight:850;padding:11px 15px;border-radius:10px;cursor:pointer}.btn.secondary{background:#273454;color:#edf4ff;border:1px solid #43537a}.rowbtn{display:flex;gap:8px;flex-wrap:wrap;margin-top:13px}.rightstack{display:flex;flex-direction:column;gap:16px}.info{padding:18px 19px}.eyebrow{color:var(--cyan);text-transform:uppercase;letter-spacing:1.4px;font-size:10px;font-weight:900}.info h3{margin:7px 0 8px;font-size:18px}.info p,.info li{font-size:13px;line-height:1.65;color:var(--muted)}.info ul{padding-left:18px;margin-bottom:0}.result{border:1px solid #62e5f538;background:#132a40;border-radius:12px;padding:13px;margin-top:12px;font-size:13px;line-height:1.6;color:#e9f8ff}.pills{display:flex;gap:7px;flex-wrap:wrap;margin-top:12px}.pill{border:1px solid #ffffff22;background:#ffffff08;padding:7px 9px;border-radius:99px;font-size:11px;color:#d5e1ff}.hidden{display:none!important}.organ-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:9px;padding:0 18px 18px}.organ{background:#ffffff07;border:1px solid #ffffff19;border-radius:13px;padding:12px;text-align:left;color:var(--text);cursor:pointer}.organ strong{display:block;margin:5px 0}.organ span{font-size:12px;color:var(--muted);line-height:1.5}.organ.selected{border-color:var(--cyan);background:#62e5f513}.bigemoji{font-size:23px}.classlist{display:grid;gap:9px}.classrow{display:grid;grid-template-columns:100px 1fr;gap:10px;padding:11px 0;border-bottom:1px solid #ffffff12;font-size:13px;line-height:1.5}.classrow b{color:var(--violet)}.quizopts{display:grid;gap:8px;margin-top:14px}.option{text-align:left;background:#222e50;border:1px solid #405078;color:white;padding:12px;border-radius:10px;cursor:pointer}.option:hover{border-color:var(--cyan)}.option.correct{background:#174538;border-color:#66e3a4}.option.wrong{background:#512b43;border-color:#ff9fc8}.footnote{font-size:11px;color:#8292b9;line-height:1.5;padding:0 3px;margin-top:16px}
+@media(max-width:820px){.layout{grid-template-columns:1fr}.view,.view canvas{min-height:320px}.rightstack{display:grid;grid-template-columns:1fr}.tag{display:none}}
+@media(max-width:430px){.organ-grid{grid-template-columns:1fr}.view,.view canvas{min-height:285px}}
+</style>
+</head>
+<body>
+<header><div class="top"><div class="brand"><div class="logo">✳</div><div><h1>BiyoLab <span style="color:var(--cyan)">3D</span></h1><p class="sub">11. sınıf biyoloji • Duyu ve sinir sistemi simülasyonu</p></div></div><div class="tag">ETKİLEŞİMLİ DİJİTAL LABORATUVAR</div></div></header>
+<main>
+<nav class="tabs" aria-label="Simülasyon bölümleri">
+<button class="tab active" data-page="stim">⚡ Uyaran → Reseptör</button><button class="tab" data-page="brain">🧠 Beyin ve duyu yolları</button><button class="tab" data-page="neuron">〰 Nöron iletimi</button><button class="tab" data-page="classify">◈ Sınıflandırma</button><button class="tab" data-page="quiz">✦ Mini test</button>
+</nav>
+<section id="page-stim" class="page">
+<div class="layout">
+<div class="panel">
+<div class="panelhead"><div><h2>Uyaranı seç, sinyal yolunu izle</h2><p>Bir uyaran seçerek hangi reseptörün etkinleştiğini ve bilginin nasıl iletildiğini incele.</p></div><span class="pill">MODEL 01</span></div>
+<div class="view" id="stimView"><div class="viewtools"><button class="mini" id="rotateStim">⟳ Döndür</button><button class="mini" id="resetStim">Sıfırla</button></div><canvas id="stimCanvas" aria-label="3 boyutlu uyaran ve reseptör modeli"></canvas><div class="viewlabel" id="stimViewLabel">3B şematik model • fareyle sürükle</div></div>
+<div class="controls"><label for="stimSelect">Uyaran türü</label><select id="stimSelect"><option value="light">Işık</option><option value="sound">Ses titreşimleri</option><option value="odor">Koku molekülleri</option><option value="taste">Tat veren kimyasal maddeler</option><option value="touch">Dokunma / basınç</option><option value="heat">Sıcaklık değişimi</option></select><div class="rowbtn"><button class="btn" id="sendStim">⚡ Uyaranı gönder</button><button class="btn secondary" id="stopStim">Durdur</button></div><div class="result" id="stimResult">Uyaranı seç ve “Uyaranı gönder” düğmesine bas.</div></div>
+</div>
+<div class="rightstack">
+<div class="panel info"><div class="eyebrow">Nasıl çalışır?</div><h3>Uyaranın sinirsel mesaja dönüşmesi</h3><p>Reseptör, duyarlı olduğu uyaranı algılar. Duyu hücresi veya duyu nöronunun ucunda oluşan değişimler sinirsel sinyalin oluşmasını sağlayabilir.</p><div class="flowmini pills"><span class="pill">Uyaran</span><span class="pill">→ Reseptör</span><span class="pill">→ Duyu siniri</span><span class="pill">→ MSS</span></div></div>
+<div class="panel info"><div class="eyebrow">Bilimsel not</div><h3>Her reseptör her uyaranı algılamaz</h3><p>Reseptörler belirli uyaranlara daha duyarlıdır. Örneğin fotoreseptörler ışığı, kemoreseptörler belirli kimyasal maddeleri, mekanoreseptörler mekanik etkileri algılar.</p></div>
+</div>
+</div>
+</section>
+<section id="page-brain" class="page hidden">
+<div class="layout"><div class="panel"><div class="panelhead"><div><h2>3B beyin ve duyu yolları</h2><p>Bir duyu organı seç. Beyne giden şematik yolu vurgula.</p></div><span class="pill">MODEL 02</span></div><div class="view"><div class="viewtools"><button class="mini" id="brainRotate">⟳ Döndür</button><button class="mini" id="brainReset">Sıfırla</button></div><canvas id="brainCanvas" aria-label="3 boyutlu şematik beyin modeli"></canvas><div class="viewlabel" id="brainLabel">Beyin modeli • fareyle sürükle</div></div><div class="controls"><label for="organSelect">Duyu organı</label><select id="organSelect"><option value="eye">Göz — görme</option><option value="ear">Kulak — işitme</option><option value="nose">Burun — koku</option><option value="tongue">Dil — tat</option><option value="skin">Deri — dokunma</option></select><div class="rowbtn"><button class="btn" id="showPath">Duyu yolunu göster</button></div><div class="result" id="brainResult">Bir duyu organı seçip yolu göster.</div></div></div>
+<div class="rightstack"><div class="panel info"><div class="eyebrow">Beynin rolü</div><h3>Bilgi iletimi ve algı</h3><p>Duyu bilgileri sinir yollarıyla merkezi sinir sistemine ulaşır. Beyindeki ilgili alanlar bilgiyi işler; algı, dikkat ve deneyim gibi süreçlerden de etkilenir.</p></div><div class="panel info"><div class="eyebrow">Önemli ayrım</div><h3>Reseptör ≠ algı merkezi</h3><p>Reseptör uyaranı algılar. Duyu sinirleri bilgiyi taşır. Merkezi sinir sistemi ise gelen bilgiyi işler ve uygun yanıtların oluşturulmasına katılır.</p></div></div></div>
+</section>
+<section id="page-neuron" class="page hidden">
+<div class="layout"><div class="panel"><div class="panelhead"><div><h2>3B nöron ve sinyal iletimi</h2><p>Nöronun bölümlerini seç ve sinyalin yolunu adım adım izle.</p></div><span class="pill">MODEL 03</span></div><div class="view"><div class="viewtools"><button class="mini" id="neuronRotate">⟳ Döndür</button><button class="mini" id="neuronReset">Sıfırla</button></div><canvas id="neuronCanvas" aria-label="3 boyutlu şematik nöron modeli"></canvas><div class="viewlabel">Nöron modeli • fareyle sürükle</div></div><div class="controls"><label for="partSelect">Nöron bölümü</label><select id="partSelect"><option value="dendrite">Dendrit</option><option value="soma">Hücre gövdesi</option><option value="axon">Akson</option><option value="terminal">Akson ucu</option><option value="synapse">Sinaps</option></select><div class="rowbtn"><button class="btn" id="explainPart">Bölümü açıkla</button><button class="btn" id="runNeuron">▶ İletimi canlandır</button><button class="btn secondary" id="pauseNeuron">Durdur</button></div><div class="result" id="neuronResult">Bir bölüm seçip açıklamasını görebilir veya iletimi canlandırabilirsin.</div></div></div>
+<div class="rightstack"><div class="panel info"><div class="eyebrow">İletim sırası</div><h3>Dendritten sinapsa</h3><div class="classlist"><div class="classrow"><b>1. Dendrit</b><span>Diğer hücrelerden gelen sinyalleri alabilir.</span></div><div class="classrow"><b>2. Hücre gövdesi</b><span>Gelen sinyallerin bütünleştirilmesine katılır.</span></div><div class="classrow"><b>3. Akson</b><span>Aksiyon potansiyeli akson boyunca ilerleyebilir.</span></div><div class="classrow"><b>4. Akson ucu</b><span>Sonraki hücreyle iletişim kurar.</span></div><div class="classrow"><b>5. Sinaps</b><span>Kimyasal sinapsta nörotransmitterler rol oynayabilir.</span></div></div></div><div class="panel info"><div class="eyebrow">Hatırla</div><p>Şemadaki parlama, sinyal yolunu görselleştirmek içindir; gerçek nöronlar bu şekilde ışık saçmaz.</p></div></div></div>
+</section>
+<section id="page-classify" class="page hidden">
+<div class="layout"><div class="panel"><div class="panelhead"><div><h2>Reseptörleri sınıflandır</h2><p>Reseptör türünü seçerek örnek uyaranları incele.</p></div><span class="pill">MODEL 04</span></div><div class="controls"><label for="classSelect">Reseptör tipi</label><select id="classSelect"><option value="photo">Fotoreseptör</option><option value="mech">Mekanoreseptör</option><option value="chemo">Kemoreseptör</option><option value="thermo">Termoreseptör</option><option value="noci">Nosiseptör</option></select><div class="result" id="classResult"></div></div><div class="organ-grid" id="classCards"><button class="organ selected" data-class="photo"><span class="bigemoji">👁️</span><strong>Fotoreseptör</strong><span>Işık enerjisini algılar.</span></button><button class="organ" data-class="mech"><span class="bigemoji">〰️</span><strong>Mekanoreseptör</strong><span>Basınç, titreşim ve gerilme gibi mekanik etkileri algılar.</span></button><button class="organ" data-class="chemo"><span class="bigemoji">🧪</span><strong>Kemoreseptör</strong><span>Belirli kimyasal maddelere yanıt verir.</span></button><button class="organ" data-class="thermo"><span class="bigemoji">🌡️</span><strong>Termoreseptör</strong><span>Sıcaklık değişimlerini algılar.</span></button><button class="organ" data-class="noci"><span class="bigemoji">⚠️</span><strong>Nosiseptör</strong><span>Doku hasarı oluşturabilecek uyaranlarla ilişkili bilgiyi algılar.</span></button></div></div>
+<div class="rightstack"><div class="panel info"><div class="eyebrow">Duyu organlarına göre</div><h3>Örnekler</h3><ul><li>Göz: fotoreseptörler</li><li>İç kulak: mekanoreseptör özellikli tüylü hücreler</li><li>Burun ve dil: kemoreseptörler</li><li>Deri: mekanoreseptör, termoreseptör ve nosiseptör örnekleri</li></ul></div><div class="panel info"><div class="eyebrow">Sınav ipucu</div><p>Bir organ tek bir reseptör türüyle sınırlı olmak zorunda değildir. Deri, farklı uyaranları algılayan çeşitli reseptörler içerir.</p></div></div></div>
+</section>
+<section id="page-quiz" class="page hidden"><div class="layout"><div class="panel info"><div class="eyebrow">Kendini dene</div><h2 id="quizQuestion">1. Işığı algılayan reseptör tipi hangisidir?</h2><p>En doğru cevabı seç. Her sorudan sonra kısa açıklama gösterilir.</p><div class="quizopts" id="quizOptions"></div><div class="result" id="quizFeedback">Bir cevap seç.</div><div class="rowbtn"><button class="btn" id="nextQuiz">Sonraki soru →</button><button class="btn secondary" id="restartQuiz">Baştan başla</button></div></div><div class="panel info"><div class="eyebrow">İlerleme</div><h3 id="scoreTitle">Puan: 0 / 5</h3><p id="scoreText">Soruları cevapladıkça puanın burada güncellenir.</p><div class="pills"><span class="pill">11. sınıf biyoloji</span><span class="pill">5 soru</span><span class="pill">Açıklamalı</span></div></div></div></section>
+<p class="footnote">Eğitim amaçlı şematik simülasyondur. 3B şekiller öğretim için oluşturulmuş basitleştirilmiş modellerdir; tıbbi/anatomik görüntü yerine geçmez. Bazı bölümler çevrimiçi 3B grafik kütüphanesi kullanır; ilk açılışta internet bağlantısı gerekebilir.</p>
+</main>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script>
+const $=s=>document.querySelector(s), $$=s=>[...document.querySelectorAll(s)];
+$$('.tab').forEach(b=>b.addEventListener('click',()=>{$$('.tab').forEach(x=>x.classList.toggle('active',x===b));$$('.page').forEach(x=>x.classList.toggle('hidden',x.id!=='page-'+b.dataset.page));setTimeout(()=>Object.values(scenes).forEach(s=>s.resize()),80)}));
+const reduced=window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+function material(color,rough=.55,metal=.05){return new THREE.MeshStandardMaterial({color,roughness:rough,metalness:metal})}
+function makeScene(canvasId,kind){
+ const canvas=document.getElementById(canvasId), scene=new THREE.Scene();scene.background=new THREE.Color('#111a32');
+ const camera=new THREE.PerspectiveCamera(38,1,.1,100);camera.position.set(0,0,kind==='neuron'?10:8);
+ const renderer=new THREE.WebGLRenderer({canvas,antialias:true,alpha:false});renderer.setPixelRatio(Math.min(devicePixelRatio,2));renderer.outputEncoding=THREE.sRGBEncoding;
+ scene.add(new THREE.HemisphereLight(0xbfdcff,0x20213f,2));
+ const key=new THREE.DirectionalLight(0xffffff,2.3);key.position.set(4,5,7);scene.add(key);
+ const fill=new THREE.PointLight(0x60dff5,1.5);fill.position.set(-4,1,4);scene.add(fill);
+ const root=new THREE.Group();scene.add(root);
+ let dragging=false,px=0,py=0,spin=0,anim=true;
+ canvas.addEventListener('pointerdown',e=>{dragging=true;px=e.clientX;py=e.clientY;canvas.setPointerCapture(e.pointerId)});
+ canvas.addEventListener('pointermove',e=>{if(!dragging)return;root.rotation.y+=(e.clientX-px)*.009;root.rotation.x+=(e.clientY-py)*.009;px=e.clientX;py=e.clientY});
+ canvas.addEventListener('pointerup',()=>dragging=false);canvas.addEventListener('pointercancel',()=>dragging=false);
+ function resize(){const w=canvas.clientWidth||600,h=canvas.clientHeight||360;renderer.setSize(w,h,false);camera.aspect=w/h;camera.updateProjectionMatrix()}
+ function reset(){root.rotation.set(0,0,0);camera.position.set(0,0,kind==='neuron'?10:8)}
+ function render(){requestAnimationFrame(render);if(anim&&!dragging&&kind!=='neuron')root.rotation.y+=.0025;renderer.render(scene,camera)}
+ resize();render();return{scene,root,camera,renderer,resize,reset,setAnim:v=>anim=v};
+}
+const scenes={};
+function addSphere(root,pos,scale,color,rough=.6){let m=new THREE.Mesh(new THREE.SphereGeometry(1,32,24),material(color,rough));m.position.set(...pos);m.scale.set(...scale);root.add(m);return m}
+function addLine(root,pts,color,r=.025){let curve=new THREE.CatmullRomCurve3(pts.map(p=>new THREE.Vector3(...p)));let mesh=new THREE.Mesh(new THREE.TubeGeometry(curve,Math.max(24,pts.length*8),r,8,false),material(color,.45));root.add(mesh);return mesh}
+function addGlow(root,pos,color){let g=new THREE.Mesh(new THREE.SphereGeometry(.1,16,12),new THREE.MeshBasicMaterial({color}));g.position.set(...pos);root.add(g);return g}
+function makeBrain(root,small=false){
+ // Two stylized hemispheres, with curved gyri; educational 3D model, not an anatomical scan.
+ const brainMat=material('#e58da7',.65), brain2=material('#d77c9a',.68);
+ const left=addSphere(root,[-.62,.1,0],[1.05,1.22,.76],'#d984a0'),right=addSphere(root,[.62,.1,0],[1.05,1.22,.76],'#e49ab0');
+ left.rotation.z=-.14;right.rotation.z=.14;
+ // Winding surface-like ridges across both hemispheres
+ for(let side of [-1,1]){
+  for(let i=0;i<9;i++){
+   let y=-.77+i*.19,pts=[];
+   for(let j=0;j<=22;j++){let t=j/22*Math.PI*1.72-.86;let x=side*(.62+.91*Math.cos(t));let yy=y+.07*Math.sin(t*2.1+i*.45);let z=.58*Math.sin(t);pts.push([x,yy,z])}
+   addLine(root,pts,i%2?'#f3b2c1':'#bb627f',.026);
+  }
+ }
+ // brain stem and cerebellum
+ addSphere(root,[0,-1.2,-.05],[.3,.68,.36],'#d78aa9').rotation.z=-.15;
+ addSphere(root,[.12,-1.14,-.35],[.58,.42,.36],'#b86e94');
+ for(let i=0;i<6;i++)addLine(root,[[-.35,-1.28+i*.06,-.58],[0,-1.18+i*.06,-.67],[.48,-1.26+i*.06,-.55]],'#e6a1bd',.018);
+ // midline
+ addLine(root,[[0,1.05,.48],[0,.45,.67],[0,-.15,.69],[0,-.65,.52]],'#763f6e',.018);
+}
+function makeNeuron(root){
+ const gold='#f5c66a',blue='#63dff2',pink='#c1a5ff';
+ addSphere(root,[-1.25,0,0],[.72,.72,.62],'#d7a0ee');
+ addSphere(root,[-1.38,.13,.48],[.24,.24,.16],'#8d6cc5');
+ // branching dendrites
+ const branches=[
+ [[-1.7,.35,0],[-2.1,.65,.05],[-2.45,.62,.08]],
+ [[-1.72,.05,0],[-2.2,-.08,.06],[-2.5,-.3,.08]],
+ [[-1.42,.62,0],[-1.55,1,.08],[-1.85,1.2,.08]],
+ [[-1.05,.42,0],[-.85,.82,.1],[-.7,1.05,.1]],
+ [[-1.68,-.25,0],[-2,-.7,.08],[-2.25,-.86,.08]],
+ [[-1.02,-.3,0],[-.85,-.72,.08],[-.62,-.9,.08]]
+ ];branches.forEach(p=>addLine(root,p,pink,.035));
+ // axon
+ addLine(root,[[-.65,-.02,0],[-.15,-.03,0],[.5,-.02,0],[1.2,0,0],[1.8,.04,0]],blue,.07);
+ for(let i=0;i<5;i++){let x=-.25+i*.43;addSphere(root,[x,0,0],[.17,.16,.16],'#e8e1ff')}
+ // terminal branches
+ addLine(root,[[1.8,.04,0],[2.12,.3,.02],[2.38,.35,.05]],pink,.035);
+ addLine(root,[[1.8,.04,0],[2.12,-.12,.02],[2.38,-.25,.05]],pink,.035);
+ addLine(root,[[1.8,.04,0],[2.05,.03,.02],[2.34,.02,.05]],pink,.035);
+ // synaptic target
+ addSphere(root,[2.72,.03,-.12],[.28,.55,.3],'#7e8dd4');
+ for(let i=0;i<5;i++)addGlow(root,[2.42+i*.055,-.12+(i%2)*.25,.18],'#ffd477');
+}
+function makeStim(root){
+ // receptor panel: skin-like curved surface, receptor endings and incoming stimulus particles
+ addSphere(root,[0,-.55,-.25],[2.3,.48,.55],'#b978a4');
+ for(let i=0;i<8;i++){let x=-1.85+i*.52;addLine(root,[[x,-.5,.05],[x+.08,-.12,.15],[x+.05,.12,.15]],'#f1b1d0',.035);addGlow(root,[x+.05,.14,.15],'#62e5f5')}
+ addSphere(root,[0,.75,-.3],[.95,.42,.5],'#6779bd');
+ for(let i=0;i<7;i++){let x=-.7+i*.23;addLine(root,[[x,.8,.1],[x,.55,.14],[x+.05,.38,.16]],'#b6c8ff',.025)}
+ for(let i=0;i<7;i++)addGlow(root,[-1.7+i*.55,1.65+(i%3)*.15,.25],'#ffd477');
+ addLine(root,[[-.7,.2,.2],[-.45,.05,.3],[0,-.03,.3],[.6,.05,.3],[1.2,.35,.3]],'#62e5f5',.045);
+}
+function clearGroup(g){while(g.children.length){let o=g.children.pop();if(o.geometry)o.geometry.dispose();if(o.material){if(Array.isArray(o.material))o.material.forEach(m=>m.dispose());else o.material.dispose()}}}
+function setupScenes(){
+ scenes.stim=makeScene('stimCanvas','stim');makeStim(scenes.stim.root);
+ scenes.brain=makeScene('brainCanvas','brain');makeBrain(scenes.brain.root);
+ scenes.neuron=makeScene('neuronCanvas','neuron');makeNeuron(scenes.neuron.root);
+}
+function rebuildStim(){clearGroup(scenes.stim.root);makeStim(scenes.stim.root);const type=$('#stimSelect').value;let color='#ffd477';if(type==='light')color='#fff1a6';if(type==='sound')color='#62e5f5';if(type==='odor'||type==='taste')color='#c1a5ff';if(type==='touch')color='#ff9fc8';if(type==='heat')color='#ff865e';for(let i=0;i<9;i++)addGlow(scenes.stim.root,[-1.7+i*.42,1.55+(i%3)*.16,.4],color)}
+setupScenes();
+const stimInfo={
+light:['Fotoreseptör','Işık, retinadaki çubuk ve koni hücreleri tarafından algılanır. Sinirsel bilgi görme yollarıyla merkezi sinir sistemine taşınır.'],
+sound:['Mekanoreseptör özellikli tüylü hücreler','Ses titreşimleri iç kulaktaki yapıları etkiler; kokleadaki tüylü hücreler mekanik hareketi sinirsel sinyale dönüştürür.'],
+odor:['Kemoreseptör','Koku molekülleri burundaki koku alma reseptörlerini uyarır. Bilgi koku alma yollarıyla beyne iletilir.'],
+taste:['Kemoreseptör','Tükürükte çözünen tat maddeleri tat tomurcuklarındaki reseptör hücrelerini uyarır.'],
+touch:['Mekanoreseptör','Deri içindeki bazı reseptörler dokunma, basınç ve titreşim gibi mekanik uyaranları algılar.'],
+heat:['Termoreseptör','Derideki sıcaklık reseptörleri sıcaklık değişimlerini algılar.']
+};
+$('#sendStim').onclick=()=>{let d=stimInfo[$('#stimSelect').value];$('#stimResult').innerHTML='<b style="color:var(--cyan)">Reseptör:</b> '+d[0]+'<br>'+d[1]+'<br><br><b>Genel yol:</b> Uyaran → reseptör → duyu siniri → merkezi sinir sistemi.';$('#stimViewLabel').textContent='Uyaran aktif • reseptör bölgesi vurgulanıyor';rebuildStim();};
+$('#stopStim').onclick=()=>{$('#stimResult').textContent='Uyaran durduruldu. Başka bir uyaran seçerek tekrar deneyebilirsin.';$('#stimViewLabel').textContent='3B şematik model • fareyle sürükle'};
+$('#stimSelect').onchange=rebuildStim;
+$('#rotateStim').onclick=()=>scenes.stim.root.rotation.y+=Math.PI/3;$('#resetStim').onclick=()=>scenes.stim.reset();
+const paths={eye:['Göz','Retina fotoreseptörleri ışığı algılar. Görme bilgisi optik sinir ve görme yollarıyla beyindeki görmeyle ilişkili alanlara ulaşır.'],ear:['Kulak','Kokleadaki tüylü hücreler ses titreşimlerine yanıt verir. İşitme bilgisi sinir yollarıyla beyin sapı ve işitme alanlarına taşınır.'],nose:['Burun','Koku reseptörleri koku moleküllerine yanıt verir. Bilgi koku alma yollarıyla beyin bölgelerine iletilir.'],tongue:['Dil','Tat tomurcuklarındaki reseptör hücreleri çözünmüş maddeleri algılar. Tat bilgisi kraniyal sinirlerle beyin sapına ve ilgili alanlara taşınır.'],skin:['Deri','Deri reseptörleri dokunma, basınç veya sıcaklık gibi uyaranları algılar. Bilgi duyu sinirleri ve omurilik/beyin yollarıyla merkezi sinir sistemine taşınır.']};
+$('#showPath').onclick=()=>{let d=paths[$('#organSelect').value];$('#brainResult').innerHTML='<b style="color:var(--cyan)">'+d[0]+' yolu</b><br>'+d[1];$('#brainLabel').textContent=d[0]+' → duyu yolları → beyin';};
+$('#brainRotate').onclick=()=>scenes.brain.root.rotation.y+=Math.PI/3;$('#brainReset').onclick=()=>{scenes.brain.reset();$('#brainLabel').textContent='Beyin modeli • fareyle sürükle'};
+const partInfo={dendrite:['Dendrit','Diğer nöronlardan veya reseptörlerle ilişkili hücrelerden gelen sinyalleri alabilir.'],soma:['Hücre gövdesi','Çekirdek ve hücrenin temel organellerini içerir; gelen sinyallerin bütünleştirilmesinde rol oynar.'],axon:['Akson','Uygun koşullarda aksiyon potansiyeli akson boyunca ilerler. Miyelinli aksonlarda iletim daha hızlı olabilir.'],terminal:['Akson ucu','Elektriksel sinyal akson ucuna ulaştığında nörotransmitter salınması gibi süreçleri başlatabilir.'],synapse:['Sinaps','Nöron ile başka bir hücre arasındaki iletişim bölgesidir. Kimyasal sinapsta nörotransmitterler görev alabilir.']};
+$('#explainPart').onclick=()=>{let d=partInfo[$('#partSelect').value];$('#neuronResult').innerHTML='<b style="color:var(--cyan)">'+d[0]+'</b><br>'+d[1]};
+let neuronTimer=null,neuronStep=0;
+$('#runNeuron').onclick=()=>{clearInterval(neuronTimer);neuronStep=0;const labels=['Dendrit','Hücre gövdesi','Akson','Akson ucu','Sinaps'];$('#neuronResult').textContent='Sinyal yolu canlandırılıyor…';neuronTimer=setInterval(()=>{if(neuronStep>=labels.length){clearInterval(neuronTimer);$('#neuronResult').innerHTML='<b>Tamamlandı.</b> Bu canlandırma sinyal yolunu şematik olarak gösterir.';return}$('#neuronResult').innerHTML='<b style="color:var(--cyan)">'+labels[neuronStep]+'</b><br>'+partInfo[Object.keys(partInfo)[neuronStep]][1];const x=[-1.7,-1.25,.3,1.8,2.45][neuronStep];addGlow(scenes.neuron.root,[x,0,.5],'#fff0a1');neuronStep++},1100)};
+$('#pauseNeuron').onclick=()=>{clearInterval(neuronTimer);$('#neuronResult').textContent='Canlandırma durduruldu.'};$('#neuronRotate').onclick=()=>scenes.neuron.root.rotation.y+=Math.PI/3;$('#neuronReset').onclick=()=>{clearInterval(neuronTimer);scenes.neuron.reset();clearGroup(scenes.neuron.root);makeNeuron(scenes.neuron.root);$('#neuronResult').textContent='Bir bölüm seçip açıklamasını görebilir veya iletimi canlandırabilirsin.'};
+const classInfo={photo:['Fotoreseptör','Işık enerjisini algılar. Örnek: retinadaki çubuk ve koni hücreleri.'],mech:['Mekanoreseptör','Dokunma, basınç, titreşim ve gerilme gibi mekanik etkileri algılar. Örnek: derideki dokunma reseptörleri ve iç kulaktaki tüylü hücreler.'],chemo:['Kemoreseptör','Belirli kimyasal maddelere yanıt verir. Örnek: burundaki koku reseptörleri ve tat tomurcuklarındaki reseptör hücreleri.'],thermo:['Termoreseptör','Sıcaklık değişimlerini algılar. Örnek: derideki sıcaklık reseptörleri.'],noci:['Nosiseptör','Doku hasarı oluşturabilecek veya hasarla ilişkili uyaranları algılayan sinir uçlarıdır. Ağrı deneyiminin oluşması daha geniş sinirsel süreçleri içerir.']};
+function showClass(key){let d=classInfo[key];$('#classResult').innerHTML='<b style="color:var(--cyan)">'+d[0]+'</b><br>'+d[1];$$('.organ').forEach(c=>c.classList.toggle('selected',c.dataset.class===key))}
+$$('.organ').forEach(c=>c.onclick=()=>showClass(c.dataset.class));$('#classSelect').onchange=()=>showClass($('#classSelect').value);showClass('photo');
+const qs=[
+{q:'1. Işığı algılayan reseptör tipi hangisidir?',o:['Kemoreseptör','Fotoreseptör','Termoreseptör'],a:1,e:'Fotoreseptörler ışığa duyarlıdır; retinadaki çubuk ve koni hücreleri buna örnektir.'},
+{q:'2. Burundaki koku reseptörleri hangi uyaranı algılar?',o:['Ses titreşimleri','Işık','Koku molekülleri'],a:2,e:'Koku molekülleri kimyasal uyaranlardır; kemoreseptörler tarafından algılanırlar.'},
+{q:'3. Aksiyon potansiyeli genellikle nöronun hangi bölümü boyunca ilerler?',o:['Akson','Dendritlerin dış yüzeyi','Çekirdek zarı'],a:0,e:'Aksiyon potansiyeli akson boyunca ilerleyebilir; akson ucu sinaps üzerinden iletişime katılır.'},
+{q:'4. Deride basınç ve dokunmayı algılayan reseptörler hangi gruptadır?',o:['Fotoreseptör','Mekanoreseptör','Kemoreseptör'],a:1,e:'Mekanoreseptörler dokunma, basınç ve titreşim gibi mekanik uyaranları algılar.'},
+{q:'5. Tat ve koku reseptörleri çoğunlukla hangi tür uyaranlara yanıt verir?',o:['Kimyasal uyaranlar','Yalnızca ışık','Yalnızca ses'],a:0,e:'Tat ve koku algısında kimyasal maddelere yanıt veren kemoreseptörler rol oynar.'}
+];let qi=0,score=0,answered=false,correctSet=new Set();
+function renderQuiz(){answered=false;let q=qs[qi];$('#quizQuestion').textContent=q.q;$('#quizOptions').innerHTML='';q.o.forEach((o,i)=>{let b=document.createElement('button');b.className='option';b.textContent=o;b.onclick=()=>{if(answered)return;answered=true;let ok=i===q.a;if(ok){score++;correctSet.add(qi);b.classList.add('correct')}else{b.classList.add('wrong');$('#quizOptions').children[q.a].classList.add('correct')}$('#quizFeedback').innerHTML=(ok?'✓ Doğru! ':'✕ Doğru cevap: '+q.o[q.a]+'. ')+q.e;$('#scoreTitle').textContent='Puan: '+score+' / '+qs.length;$('#scoreText').textContent='Cevaplanan soru: '+(qi+1)+' / '+qs.length;};$('#quizOptions').appendChild(b)});$('#quizFeedback').textContent='Bir cevap seç.'}
+$('#nextQuiz').onclick=()=>{if(!answered){$('#quizFeedback').textContent='Önce bir cevap seç.';return}if(qi<qs.length-1){qi++;renderQuiz()}else{$('#quizQuestion').textContent='Test tamamlandı!';$('#quizOptions').innerHTML='';$('#quizFeedback').innerHTML='Sonuç: <b>'+score+' / '+qs.length+'</b>. Tekrar denemek için “Baştan başla” düğmesine bas.';$('#nextQuiz').textContent='Test bitti';}};
+$('#restartQuiz').onclick=()=>{qi=0;score=0;correctSet.clear();$('#nextQuiz').textContent='Sonraki soru →';$('#scoreTitle').textContent='Puan: 0 / '+qs.length;$('#scoreText').textContent='Soruları cevapladıkça puanın burada güncellenir.';renderQuiz()};renderQuiz();
+window.addEventListener('resize',()=>Object.values(scenes).forEach(s=>s.resize()));
+</script>
+</body>
+</html>
